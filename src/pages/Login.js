@@ -12,7 +12,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    if (username === "admin" && password === "admin") {
+    if (username === "hostel" && password === "house2") {
       toast.success("Logged in successfully");
       navigate("/");
       localStorage.setItem("token", "dharmanaprodhan");
