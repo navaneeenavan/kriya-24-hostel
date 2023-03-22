@@ -21,7 +21,7 @@ const PortalWrapper = () => {
 
   return (
     <section className="w-screen lg:h-screen flex font-poppins">
-      <div className={`${location.pathname === "/" ? "w-full" : "hidden lg:block"} lg:w-1/2 overflow-y-scroll bg-teal-100 px-[calc(100vw/12)] lg:px-[calc(100vw/24)] py-8 shadow-xl relative z-10`}>
+      <div className={`${location.pathname === "/" ? "w-full" : "hidden lg:block"} lg:w-1/2 overflow-y-scroll bg-amber-100 px-[calc(100vw/12)] lg:px-[calc(100vw/24)] py-8 shadow-xl relative z-10`}>
         <div className="flex justify-between items-center">
           <div
             className="w-24 lg:w-36 h-24 lg:h-36 aspect-square"
@@ -32,7 +32,7 @@ const PortalWrapper = () => {
             }}
           ></div>
           <div className="w-[40%] text-right">
-            <h1 className="text-2xl lg:text-3xl font-semibold text-teal-500">
+            <h1 className="text-2xl lg:text-3xl font-semibold text-amber-500">
               Admin Dashboard
             </h1>
             <button
@@ -63,15 +63,15 @@ const NavItem = ({ title, href, icon }) => {
   return (
     <Link
       to={href}
-      className="shadow-xl aspect-video h-32 rounded-xl border-[4px] hover:bg-teal-500 hover:bg-opacity-10  border-teal-400 group "
+      className="shadow-xl aspect-video h-32 rounded-xl border-[4px] hover:bg-amber-500 hover:bg-opacity-10  border-amber-400 group "
     >
       <div className="w-full h-full relative p-4 [clip-path:polygon(0%_0%,100%_0%,100%_100%,0%_100%)]">
-        <h1 className="text-xl [line-height:1.75rem] text-teal-600 font-semibold w-[60%] ">
+        <h1 className="text-xl [line-height:1.75rem] text-amber-600 font-semibold w-[60%] ">
           {title}
         </h1>
         {React.cloneElement(icon, {
           className:
-            "text-8xl transition-all group-hover:-translate-y-[10%] absolute -bottom-4 right-4 text-teal-400 opacity-40",
+            "text-8xl transition-all group-hover:-translate-y-[10%] absolute -bottom-4 right-4 text-amber-400 opacity-40",
         })}
       </div>
     </Link>
