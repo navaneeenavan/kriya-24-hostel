@@ -11,10 +11,6 @@ const PortalWrapper = () => {
     localStorage.getItem("token") !== "dharmanaprodhan" && window.location.replace("/login");
   }, []);
 
-  window.onbeforeunload = function () {
-    localStorage.clear();
-  }
-
   useEffect(() => {
     console.log(location);
   }, [location]);

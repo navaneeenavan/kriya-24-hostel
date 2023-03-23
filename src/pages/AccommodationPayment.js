@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../components/Layout";
 import Dropdown from "../components/Dropdown";
 import Inputfield from "../components/TextInput";
@@ -11,6 +11,7 @@ const AccommodationPayment = () => {
   const [type, setType] = useState("KRIYA ID");
   const [id, setId] = useState("");
   const [data, setData] = useState(null);
+  const [room, setRoom] = useState("");
 
   const handleFetchData = () => {
     if (id === "") {
@@ -49,8 +50,20 @@ const AccommodationPayment = () => {
     }
   };
 
+  useEffect(() => {
+    if (data) {
+      setRoom(data.room);
+    }
+  }, [data]);
+
   const handlePaid = () => {
+    if (room === "") {
+      toast.error("Please enter a valid room number");
+      return;
+    }
+
     toast.promise(fetchUpdateAccommodation(data.email, {
+      room: room,
       payment: true,
     }), {
       loading: "Updating Details",
@@ -117,10 +130,15 @@ const AccommodationPayment = () => {
           <p className="text-xl"><b className="font-semibold">Total Amount:</b> ₹ {data.amount}</p>
           <p className="text-xl"><b className="font-semibold">Payment Status: {data.payment ? <span className="text-green-500">Paid</span> : <span className="text-red-500">Not Paid</span>}</b></p>
 
-          <Row>
+          <Inputfield
+            valueState={[room, setRoom]}
+            title="Room Number"
+          />
+
+          <div className="flex flex-row space-x-4">
             <Button handleClick={handlePaid} text="Mark as paid" className="w-1/2" />
             <Button handleClick={handleUnPaid} text="Mark as unpaid" className="w-1/2" />
-          </Row>
+          </div>
         </div>
       )}
 

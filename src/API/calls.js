@@ -42,6 +42,9 @@ export const fetchAccommodationDetailsbyEmail = (email) =>
 export const fetchAccommodationDetailsbyKriyaId = (kriyaId) =>
   axios.get(`${BASE_URL}/acc/kriyaId/${kriyaId}`, {});
 
+export const fetchAccPaid = () =>
+  axios.get(`${BASE_URL}/acc/paid`, {});
+
 export const fetchUpdateAccommodation = (email, data) =>
   axios.put(`${BASE_URL}/acc/email/${email}`, data);
 

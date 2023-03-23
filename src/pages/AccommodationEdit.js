@@ -24,6 +24,7 @@ const AccommodationEdit = () => {
   const [dinner1, setDinner1] = useState(false);
   const [dinner2, setDinner2] = useState(false);
   const [dinner3, setDinner3] = useState(false);
+  const [room, setRoom] = useState("");
 
   const fromDates = [
     "23rd March Night",
@@ -66,6 +67,7 @@ const AccommodationEdit = () => {
             setDinner1(res.data.accommodations.dinner1);
             setDinner2(res.data.accommodations.dinner2);
             setDinner3(res.data.accommodations.dinner3);
+            setRoom(res.data.accommodations.room);
             return "Details Fetched";
           }
         },
@@ -90,6 +92,7 @@ const AccommodationEdit = () => {
             setDinner1(res.data.accommodations.dinner1);
             setDinner2(res.data.accommodations.dinner2);
             setDinner3(res.data.accommodations.dinner3);
+            setRoom(res.data.accommodations.room);
             return "Details Fetched";
           }
         },
@@ -126,6 +129,7 @@ const AccommodationEdit = () => {
         dinner1,
         dinner2,
         dinner3,
+        room,
         days: (fromDate === "23rd March Night" ?
           (
             toDates.indexOf(toDate) -
@@ -204,6 +208,8 @@ const AccommodationEdit = () => {
           <p className=""><b className="font-semibold">College:</b> {data.college}</p>
           <p className=""><b className="font-semibold">Phone:</b> {data.phone}</p>
           <p className=""><b className="font-semibold">Gender:</b> {data.gender}</p>
+          <p className=""><b className="font-semibold">Room:</b> {data.room}</p>
+          <p className=""><b className="font-semibold">Payment Status:</b> {data.payment ? "Paid" : "Not Paid"}</p>
 
           {data.gender === "Male" ? (
             <div className="flex flex-col gap-6 mt-8">
@@ -407,7 +413,15 @@ const AccommodationEdit = () => {
             </p>
           </div>
 
-          <Button handleClick={handleUpdate} text="Update Data" className="w-1/2 mt-4" />
+          <div className="flex flex-row space-x-4">
+            <Button handleClick={handleUpdate} text="Update Data" className="w-1/2 mt-4" />
+            <Button handleClick={() => {
+              setId("");
+              setData({});
+              window.location.reload();
+            }}
+              text="Cancel" className="w-1/2 mt-4" />
+          </div>
         </div>
       )}
     </Layout>
