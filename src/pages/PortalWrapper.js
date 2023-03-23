@@ -17,7 +17,7 @@ const PortalWrapper = () => {
 
   return (
     <section className="w-screen lg:h-screen flex font-poppins">
-      <div className={`${location.pathname === "/" ? "w-full" : "hidden lg:block"} lg:w-1/2 overflow-y-scroll bg-amber-100 px-[calc(100vw/12)] lg:px-[calc(100vw/24)] py-8 shadow-xl relative z-10`}>
+      <div className={`${location.pathname === "/" ? "w-full" : "hidden lg:block"} lg:w-1/3 overflow-y-scroll bg-amber-100 px-[calc(100vw/12)] lg:px-[calc(100vw/24)] py-8 shadow-xl relative z-10`}>
         <div className="flex justify-between items-center">
           <div
             className="w-24 lg:w-36 h-24 lg:h-36 aspect-square"
@@ -48,7 +48,7 @@ const PortalWrapper = () => {
           ))}
         </div>
       </div>
-      <main className={`${location.pathname === "/" ? "hidden lg:block" : "w-full"} lg:w-1/2 bg-gray-100 h-screen`}>
+      <main className={`${location.pathname === "/" ? "hidden lg:block" : "w-full"} lg:w-2/3 bg-gray-100 h-screen`}>
         <Outlet />
       </main>
     </section>
