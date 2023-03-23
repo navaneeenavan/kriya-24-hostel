@@ -30,7 +30,8 @@ const AccPaid = () => {
         <p className="text-2xl font-bold pb-4">Boys</p>
         <div className="flex flex-row text-center">
           <p className="w-[10%] lg:w-[5%] font-semibold">No.</p>
-          <p className="w-[50%] lg:w-[30%] font-semibold">Name</p>
+          <p className="w-[50%] lg:w-[20%] font-semibold">Name</p>
+          <p className="hidden lg:block w-[10%] font-semibold">Kriya Id</p>
           <p className="hidden lg:block w-[25%] font-semibold">Room Type</p>
           <p className="hidden lg:block w-[10%] font-semibold">Days</p>
           <p className="hidden lg:block w-[10%] font-semibold">Amenities</p>
@@ -42,8 +43,9 @@ const AccPaid = () => {
           male && male.map((item, index) => (
             <div className="flex flex-row text-sm text-center py-2 border-b border-gray-500">
               <p className="w-[10%] lg:w-[5%]">{index + 1}.</p>
-              <p className="w-[50%] lg:w-[30%]">{item.name}</p>
-              <p className="hidden lg:block w-[25%]">{item.roomType}</p>
+              <p className="w-[50%] lg:w-[20%]">{item.name}</p>
+              <p className="hidden lg:block w-[10%]">{item.kriyaId}</p>
+              <p className="hidden lg:block w-[25%] px-2">{item.roomType}</p>
               <p className="hidden lg:block w-[10%] font-semibold">{item.days} {item.days === 1 ? "Day" : "Days"}</p>
               <p className="hidden lg:block w-[10%]">{item.amenities}</p>
               <p className="hidden lg:block w-[10%]">{item.breakfast1 + item.breakfast2 + item.breakfast3 + item.dinner1 + item.dinner2 + item.dinner3}</p>
@@ -58,7 +60,8 @@ const AccPaid = () => {
         <p className="text-2xl font-bold pb-4">Girls</p>
         <div className="flex flex-row text-center">
           <p className="w-[10%] lg:w-[5%] font-semibold">No.</p>
-          <p className="w-[50%] lg:w-[30%] font-semibold">Name</p>
+          <p className="w-[50%] lg:w-[20%] font-semibold">Name</p>
+          <p className="hidden lg:block w-[10%] font-semibold">Kriya Id</p>
           <p className="hidden lg:block w-[25%] font-semibold">Room Type</p>
           <p className="hidden lg:block w-[10%] font-semibold">Days</p>
           <p className="hidden lg:block w-[10%] font-semibold">Amenities</p>
@@ -70,8 +73,9 @@ const AccPaid = () => {
           female && female.map((item, index) => (
             <div className="flex flex-row text-sm text-center py-2 border-b border-gray-500">
               <p className="w-[10%] lg:w-[5%]">{index + 1}.</p>
-              <p className="w-[50%] lg:w-[30%]">{item.name}</p>
-              <p className="hidden lg:block w-[25%]">{item.roomType}</p>
+              <p className="w-[50%] lg:w-[20%]">{item.name}</p>
+              <p className="hidden lg:block w-[10%]">{item.kriyaId}</p>
+              <p className="hidden lg:block w-[25%] px-2">{item.roomType}</p>
               <p className="hidden lg:block w-[10%] font-semibold">{item.days} {item.days === 1 ? "Day" : "Days"}</p>
               <p className="hidden lg:block w-[10%]">{item.amenities}</p>
               <p className="hidden lg:block w-[10%]">{item.breakfast1 + item.breakfast2 + item.breakfast3 + item.dinner1 + item.dinner2 + item.dinner3}</p>
