@@ -8,10 +8,12 @@ import Toggle from "../components/Toggle";
 import { toast } from "react-hot-toast";
 import { fetchAccommodationDetailsbyEmail, fetchAccommodationDetailsbyKriyaId, fetchUpdateAccommodation } from "../API/calls";
 import { FiCheck } from "react-icons/fi";
+import KriyaInput from "../components/KriyaInput";
 
 const AccommodationEdit = () => {
   const [type, setType] = useState("KRIYA ID");
   const [id, setId] = useState("");
+  const [kriyaId, setKriyaId] = useState("");
   const [data, setData] = useState(null);
 
   const [roomType, setRoomType] = useState("");
@@ -44,63 +46,66 @@ const AccommodationEdit = () => {
     "2 Sharing with attached bathroom": 600,
   };
 
+  const handleChange = (val) => {
+    setKriyaId(val);
+    if (val.length >= 4) {
+      setTimeout(() => {
+        toast.promise(fetchAccommodationDetailsbyKriyaId(`KRIYA${val}`), {
+          loading: "Fetching Details",
+          success: (res) => {
+            setData(res.data.accommodations);
+            setRoomType(res.data.accommodations.roomType);
+            setFromDate(res.data.accommodations.from);
+            setToDate(res.data.accommodations.to);
+            setAmenities(res.data.accommodations.amenities);
+            setBreakfast1(res.data.accommodations.breakfast1);
+            setBreakfast2(res.data.accommodations.breakfast2);
+            setBreakfast3(res.data.accommodations.breakfast3);
+            setDinner1(res.data.accommodations.dinner1);
+            setDinner2(res.data.accommodations.dinner2);
+            setDinner3(res.data.accommodations.dinner3);
+            setRoom(res.data.accommodations.room);
+            return "Details Fetched";
+          },
+          error: (err) => {
+            setKriyaId("");
+            console.log(err);
+            return "Error";
+          },
+        });
+      }, 100);
+    }
+  };
+
   const handleFetchData = () => {
     if (id === "") {
       toast.error("Please enter a valid ID");
       return;
     }
-
-    if (type === "KRIYA ID") {
-      toast.promise(
-        fetchAccommodationDetailsbyKriyaId(id),
-        {
-          loading: "Fetching Details",
-          success: (res) => {
-            setData(res.data.accommodations);
-            setRoomType(res.data.accommodations.roomType);
-            setFromDate(res.data.accommodations.from);
-            setToDate(res.data.accommodations.to);
-            setAmenities(res.data.accommodations.amenities);
-            setBreakfast1(res.data.accommodations.breakfast1);
-            setBreakfast2(res.data.accommodations.breakfast2);
-            setBreakfast3(res.data.accommodations.breakfast3);
-            setDinner1(res.data.accommodations.dinner1);
-            setDinner2(res.data.accommodations.dinner2);
-            setDinner3(res.data.accommodations.dinner3);
-            setRoom(res.data.accommodations.room);
-            return "Details Fetched";
-          }
-        },
-        {
-          error: "Error Fetching Details"
+    toast.promise(
+      fetchAccommodationDetailsbyEmail(id),
+      {
+        loading: "Fetching Details",
+        success: (res) => {
+          setData(res.data.accommodations);
+          setRoomType(res.data.accommodations.roomType);
+          setFromDate(res.data.accommodations.from);
+          setToDate(res.data.accommodations.to);
+          setAmenities(res.data.accommodations.amenities);
+          setBreakfast1(res.data.accommodations.breakfast1);
+          setBreakfast2(res.data.accommodations.breakfast2);
+          setBreakfast3(res.data.accommodations.breakfast3);
+          setDinner1(res.data.accommodations.dinner1);
+          setDinner2(res.data.accommodations.dinner2);
+          setDinner3(res.data.accommodations.dinner3);
+          setRoom(res.data.accommodations.room);
+          return "Details Fetched";
         }
-      );
-    } else {
-      toast.promise(
-        fetchAccommodationDetailsbyEmail(id),
-        {
-          loading: "Fetching Details",
-          success: (res) => {
-            setData(res.data.accommodations);
-            setRoomType(res.data.accommodations.roomType);
-            setFromDate(res.data.accommodations.from);
-            setToDate(res.data.accommodations.to);
-            setAmenities(res.data.accommodations.amenities);
-            setBreakfast1(res.data.accommodations.breakfast1);
-            setBreakfast2(res.data.accommodations.breakfast2);
-            setBreakfast3(res.data.accommodations.breakfast3);
-            setDinner1(res.data.accommodations.dinner1);
-            setDinner2(res.data.accommodations.dinner2);
-            setDinner3(res.data.accommodations.dinner3);
-            setRoom(res.data.accommodations.room);
-            return "Details Fetched";
-          }
-        },
-        {
-          error: "Error Fetching Details"
-        }
-      );
-    }
+      },
+      {
+        error: "Error Fetching Details"
+      }
+    );
   };
 
   const handleUpdate = () => {
@@ -187,16 +192,21 @@ const AccommodationEdit = () => {
           valueState={[type, setType]}
           options={["KRIYA ID", "EMAIL"]}
           title="Fetch Details From"
+          className="w-1/2"
         />
-        <Inputfield
-          valueState={[id, setId]}
-          title={
-            type === "KRIYA ID"
-              ? "Kriya Id (Eg. KRIYA12345)" : "Email (Eg. abc@gmail.com)"
-          }
-        />
+        {
+          type === "KRIYA ID" ?
+            <KriyaInput value={kriyaId} handleChange={handleChange} /> :
+            <Inputfield
+              valueState={[id, setId]}
+              title={"Email (Eg. abc@gmail.com)"}
+            />
+        }
       </Row>
-      <Button handleClick={handleFetchData} text="Fetch Data" outlined className="w-1/2" />
+      {
+        type === "EMAIL" &&
+        <Button handleClick={handleFetchData} text="Fetch Data" outlined className="w-1/2" />
+      }
 
       {data && (
         <div className="bg-white rounded-md p-4 flex flex-col space-y-4">
@@ -417,6 +427,7 @@ const AccommodationEdit = () => {
             <Button handleClick={handleUpdate} text="Update Data" className="w-1/2 mt-4" />
             <Button handleClick={() => {
               setId("");
+              setKriyaId("");
               setData({});
               window.location.reload();
             }}

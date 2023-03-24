@@ -6,12 +6,34 @@ import Row from "../components/Row";
 import Button from "../components/Button";
 import { toast } from "react-hot-toast";
 import { fetchAccommodationDetailsbyEmail, fetchAccommodationDetailsbyKriyaId, fetchUpdateAccommodation } from "../API/calls";
+import KriyaInput from "../components/KriyaInput";
 
 const AccommodationPayment = () => {
   const [type, setType] = useState("KRIYA ID");
   const [id, setId] = useState("");
+  const [kriyaId, setKriyaId] = useState("");
   const [data, setData] = useState(null);
   const [room, setRoom] = useState("");
+
+  const handleChange = (val) => {
+    setKriyaId(val);
+    if (val.length >= 4) {
+      setTimeout(() => {
+        toast.promise(fetchAccommodationDetailsbyKriyaId(`KRIYA${val}`), {
+          loading: "Fetching Details",
+          success: (res) => {
+            setData(res.data.accommodations);
+            return "Details Fetched";
+          },
+          error: (err) => {
+            setKriyaId("");
+            console.log(err);
+            return "Error";
+          },
+        });
+      }, 100);
+    }
+  };
 
   const handleFetchData = () => {
     if (id === "") {
@@ -19,35 +41,19 @@ const AccommodationPayment = () => {
       return;
     }
 
-    if (type === "KRIYA ID") {
-      toast.promise(
-        fetchAccommodationDetailsbyKriyaId(id),
-        {
-          loading: "Fetching Details",
-          success: (res) => {
-            setData(res.data.accommodations);
-            return "Details Fetched";
-          }
-        },
-        {
-          error: "Error Fetching Details"
+    toast.promise(
+      fetchAccommodationDetailsbyEmail(id),
+      {
+        loading: "Fetching Details",
+        success: (res) => {
+          setData(res.data.accommodations);
+          return "Details Fetched";
         }
-      );
-    } else {
-      toast.promise(
-        fetchAccommodationDetailsbyEmail(id),
-        {
-          loading: "Fetching Details",
-          success: (res) => {
-            setData(res.data.accommodations);
-            return "Details Fetched";
-          }
-        },
-        {
-          error: "Error Fetching Details"
-        }
-      );
-    }
+      },
+      {
+        error: "Error Fetching Details"
+      }
+    );
   };
 
   useEffect(() => {
@@ -101,16 +107,21 @@ const AccommodationPayment = () => {
           valueState={[type, setType]}
           options={["KRIYA ID", "EMAIL"]}
           title="Fetch Details From"
+          className="w-1/2"
         />
-        <Inputfield
-          valueState={[id, setId]}
-          title={
-            type === "KRIYA ID"
-              ? "Kriya Id (Eg. KRIYA12345)" : "Email (Eg. abc@gmail.com)"
-          }
-        />
+        {
+          type === "KRIYA ID" ?
+            <KriyaInput value={kriyaId} handleChange={handleChange} /> :
+            <Inputfield
+              valueState={[id, setId]}
+              title={"Email (Eg. abc@gmail.com)"}
+            />
+        }
       </Row>
-      <Button handleClick={handleFetchData} text="Fetch Data" outlined className="w-1/2" />
+      {
+        type === "EMAIL" &&
+        <Button handleClick={handleFetchData} text="Fetch Data" outlined className="w-1/2" />
+      }
 
       {data && (
         <div className="bg-white rounded-md p-4 flex flex-col space-y-4">
