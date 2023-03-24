@@ -24,6 +24,17 @@ const AccPaid = () => {
     });
   }, []);
 
+  const handleCheckbox = (email) => {
+    toast.promise(fetchUpdateAccommodation(email, { vacated: true }), {
+      loading: "Updating Details",
+      success: (res) => {
+        console.log(res.data);
+      }
+    }, {
+      error: "Error Updating Details"
+    });
+  }
+
   return (
     <Layout title={"Accommodation Paid Users"} className={"space-y-6"}>
       <div className={""}>
@@ -32,12 +43,13 @@ const AccPaid = () => {
           <p className="w-[10%] lg:w-[5%] font-semibold">No.</p>
           <p className="w-[50%] lg:w-[20%] font-semibold">Name</p>
           <p className="hidden lg:block w-[10%] font-semibold">Kriya Id</p>
-          <p className="hidden lg:block w-[25%] font-semibold">Room Type</p>
+          <p className="hidden lg:block w-[20%] font-semibold">Room Type</p>
           <p className="hidden lg:block w-[10%] font-semibold">Days</p>
           <p className="hidden lg:block w-[10%] font-semibold">Amenities</p>
           <p className="hidden lg:block w-[10%] font-semibold">Meals</p>
           <p className="w-[20%] lg:w-[10%] font-semibold">Amount</p>
           <p className="w-[20%] lg:w-[10%] font-semibold">Room</p>
+          <p className="hidden lg:block w-[5%] font-semibold">Vacated</p>
         </div>
         {
           male && male.map((item, index) => (
@@ -45,12 +57,22 @@ const AccPaid = () => {
               <p className="w-[10%] lg:w-[5%]">{index + 1}.</p>
               <p className="w-[50%] lg:w-[20%]">{item.name}</p>
               <p className="hidden lg:block w-[10%]">{item.kriyaId}</p>
-              <p className="hidden lg:block w-[25%] px-2">{item.roomType}</p>
+              <p className="hidden lg:block w-[20%] px-2">{item.roomType}</p>
               <p className="hidden lg:block w-[10%] font-semibold">{item.days} {item.days === 1 ? "Day" : "Days"}</p>
               <p className="hidden lg:block w-[10%]">{item.amenities}</p>
               <p className="hidden lg:block w-[10%]">{item.breakfast1 + item.breakfast2 + item.breakfast3 + item.dinner1 + item.dinner2 + item.dinner3}</p>
               <p className="w-[20%] lg:w-[10%] font-semibold">Rs. {item.amount}</p>
               <p className="w-[20%] lg:w-[10%] font-semibold">{item.room}</p>
+              <input type="checkbox" className="hidden lg:block w-[5%]" checked={item.vacated} onClick={() => {
+                const updatedList = male.map((up) => {
+                  if (up.email === item.email) {
+                    return { ...up, vacated: true }
+                  }
+                  return { ...up };
+                })
+                setMale(updatedList);
+                handleCheckbox(item.email)
+              }} />
             </div>
           ))
         }
@@ -62,12 +84,13 @@ const AccPaid = () => {
           <p className="w-[10%] lg:w-[5%] font-semibold">No.</p>
           <p className="w-[50%] lg:w-[20%] font-semibold">Name</p>
           <p className="hidden lg:block w-[10%] font-semibold">Kriya Id</p>
-          <p className="hidden lg:block w-[25%] font-semibold">Room Type</p>
+          <p className="hidden lg:block w-[20%] font-semibold">Room Type</p>
           <p className="hidden lg:block w-[10%] font-semibold">Days</p>
           <p className="hidden lg:block w-[10%] font-semibold">Amenities</p>
           <p className="hidden lg:block w-[10%] font-semibold">Meals</p>
           <p className="w-[20%] lg:w-[10%] font-semibold">Amount</p>
           <p className="w-[20%] lg:w-[10%] font-semibold">Room</p>
+          <p className="hidden lg:block w-[5%] font-semibold">Vacated</p>
         </div>
         {
           female && female.map((item, index) => (
@@ -75,12 +98,21 @@ const AccPaid = () => {
               <p className="w-[10%] lg:w-[5%]">{index + 1}.</p>
               <p className="w-[50%] lg:w-[20%]">{item.name}</p>
               <p className="hidden lg:block w-[10%]">{item.kriyaId}</p>
-              <p className="hidden lg:block w-[25%] px-2">{item.roomType}</p>
+              <p className="hidden lg:block w-[20%] px-2">{item.roomType}</p>
               <p className="hidden lg:block w-[10%] font-semibold">{item.days} {item.days === 1 ? "Day" : "Days"}</p>
               <p className="hidden lg:block w-[10%]">{item.amenities}</p>
               <p className="hidden lg:block w-[10%]">{item.breakfast1 + item.breakfast2 + item.breakfast3 + item.dinner1 + item.dinner2 + item.dinner3}</p>
               <p className="w-[20%] lg:w-[10%] font-semibold">Rs. {item.amount}</p>
-              <p className="w-[20%] lg:w-[10%] font-semibold">{item.room}</p>
+              <input type="checkbox" className="hidden lg:block w-[5%]" checked={item.vacated} onClick={() => {
+                const updatedList = female.map((up) => {
+                  if (up.email === item.email) {
+                    return { ...up, vacated: true }
+                  }
+                  return { ...up };
+                })
+                setFemale(updatedList);
+                handleCheckbox(item.email)
+              }} />
             </div>
           ))
         }
