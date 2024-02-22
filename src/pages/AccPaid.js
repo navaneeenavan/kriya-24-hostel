@@ -207,7 +207,7 @@ const AccPaid = () => {
         </button>
       </div>
       
-        <p className="text-2xl font-bold pb-4">Girls</p>
+        <p className="text-2xl font-bold pb-4">Girl</p>
         <div className="flex flex-row text-center">
           <p className="w-[10%] lg:w-[5%] font-semibold">No.</p>
           <p className="w-[50%] lg:w-[20%] font-semibold">Name</p>
