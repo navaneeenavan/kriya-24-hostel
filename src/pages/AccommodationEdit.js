@@ -31,14 +31,14 @@ const AccommodationEdit = () => {
 
   const fromDates = [
     "22nd February Night",
+    "23rd February Morning",
     "24th February Morning",
     "25th February Morning",
-    "26th February Morning",
   ];
   const toDates = [
+    "23th February Night",
     "24th February Night",
-    "25th February Night",
-    "26th February Evening",
+    "25th February Evening",
   ]
   const roomCost = {
     "Common Free Hall": 0,
