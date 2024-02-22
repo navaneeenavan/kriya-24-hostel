@@ -11,6 +11,7 @@ const AccPaid = () => {
   const [female, setFemale] = useState(null);
   const [id, setId] = useState(null);
   const [name, setName] = useState(null);
+  const [room, setRoom] = useState(null);
 
   useEffect(() => {
     toast.promise(
@@ -50,6 +51,7 @@ const AccPaid = () => {
           } border-2 border-[#303030]`}
           onClick={() => {
             setId(true);
+            setRoom(false);
             setName(false);
             let temp = male;
             temp.sort((a, b) => a.kriyaId.localeCompare(b.kriyaId));
@@ -64,6 +66,7 @@ const AccPaid = () => {
           } border-2 border-[#303030]`}
           onClick={() => {
             setId(false);
+            setRoom(false);
             setName(true);
             let temp = [...male];
             temp.sort((a, b) => a.name.localeCompare(b.name));
@@ -71,6 +74,21 @@ const AccPaid = () => {
           }}
         >
           Name
+        </button>
+        <button
+          className={`px-6 py-2 rounded-full ${
+            room ? "bg-[#3c3c3c] text-white" : "bg-[#eaeaea] text-[#303030]"
+          } border-2 border-[#303030]`}
+          onClick={() => {
+            setRoom(true);
+            setId(false);
+            setName(false);
+            let temp = male;
+            temp.sort((a, b) => a.room.localeCompare(b.room));
+            setMale(temp);
+          }}
+        >
+          Room
         </button>
       </div>
       <div className={""}>
@@ -134,7 +152,10 @@ const AccPaid = () => {
         )}
       </div>
 
+      
+
       <div className={"pt-16"}>
+      
         <p className="text-2xl font-bold pb-4">Girls</p>
         <div className="flex flex-row text-center">
           <p className="w-[10%] lg:w-[5%] font-semibold">No.</p>
