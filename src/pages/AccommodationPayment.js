@@ -22,6 +22,7 @@ const AccommodationPayment = () => {
         toast.promise(fetchAccommodationDetailsbyKriyaId(`KRIYA${val}`), {
           loading: "Fetching Details",
           success: (res) => {
+            console.log(res.data)
             setData(res.data.accommodations);
             return "Details Fetched";
           },

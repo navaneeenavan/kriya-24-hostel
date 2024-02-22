@@ -229,7 +229,7 @@ const AccPaid = () => {
               <p className="hidden lg:block w-[20%] px-2">{item.roomType}</p>
               <p className="hidden lg:block w-[10%] font-semibold">{item.days} {item.days === 1 ? "Day" : "Days"}</p>
               <p className="hidden lg:block w-[10%]">{item.amenities}</p>
-              <p className="hidden lg:block w-[10%]">{item.breakfast1 + item.breakfast2 + item.breakfast3 + item.dinner1 + item.dinner2 + item.dinner3}</p>
+              <p className="hidden lg:block w-[10%]">{item.breakfast1 + item.breakfast2 + item.breakfast3 + item.lunch1 + item.lunch2 + item.lunch3 + item.dinner1 + item.dinner2}</p>
               <p className="w-[20%] lg:w-[10%] font-semibold">Rs. {item.amount}</p>
               <p className="w-[20%] lg:w-[10%] font-semibold">{item.room}</p>
               <input type="checkbox" className="hidden lg:block w-[5%]" checked={item.vacated} onClick={() => {

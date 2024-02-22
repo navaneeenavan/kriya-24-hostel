@@ -42,6 +42,7 @@ const AccommodationEdit = () => {
   ]
   const roomCost = {
     "Common Free Hall": 0,
+    "Two Sharing":150,
     "Two sharing with common bathroom": 250,
   };
 
@@ -59,9 +60,9 @@ const AccommodationEdit = () => {
             setBreakfast1(res.data.accommodations.breakfast1);
             setBreakfast2(res.data.accommodations.breakfast2);
             setBreakfast3(res.data.accommodations.breakfast3);
-            setLunch1(res.data.lunch1);
-            setLunch2(res.data.lunch2);
-            setLunch3(res.data.lunch3);
+            setLunch1(res.data.accommodations.lunch1);
+            setLunch2(res.data.accommodations.lunch2);
+            setLunch3(res.data.accommodations.lunch3);
             setDinner1(res.data.accommodations.dinner1);
             setDinner2(res.data.accommodations.dinner2);
             setRoom(res.data.accommodations.room);
@@ -83,10 +84,11 @@ const AccommodationEdit = () => {
       return;
     }
     toast.promise(
-      fetchAccommodationDetailsbyEmail(id),
+      fetchAccommodationDetailsbyKriyaId(id),
       {
         loading: "Fetching Details",
         success: (res) => {
+          console.log(res.data);
           setData(res.data.accommodations);
           setRoomType(res.data.accommodations.roomType);
           setFromDate(res.data.accommodations.from);
@@ -94,9 +96,9 @@ const AccommodationEdit = () => {
           setBreakfast1(res.data.accommodations.breakfast1);
           setBreakfast2(res.data.accommodations.breakfast2);
           setBreakfast3(res.data.accommodations.breakfast3);
-          setLunch1(res.data.lunch1);
-          setLunch2(res.data.lunch2);
-          setLunch3(res.data.lunch3);
+          setLunch1(res.data.accommodations.lunch1);
+          setLunch2(res.data.accommodations.lunch2);
+          setLunch3(res.data.accommodations.lunch3);
           setDinner1(res.data.accommodations.dinner1);
           setDinner2(res.data.accommodations.dinner2);
           setRoom(res.data.accommodations.room);
@@ -114,10 +116,10 @@ const AccommodationEdit = () => {
       (fromDate === "23rd March Night" ?
         (
           toDates.indexOf(toDate) -
-          fromDates.indexOf(fromDate) + 1
+          fromDates.indexOf(fromDate)
         ) : (
           toDates.indexOf(toDate) -
-          fromDates.indexOf(fromDate) + 2
+          fromDates.indexOf(fromDate) + 1
         )
       ) <= 0
     ) {
@@ -140,19 +142,19 @@ const AccommodationEdit = () => {
         days: (fromDate === "23rd March Night" ?
           (
             toDates.indexOf(toDate) -
-            fromDates.indexOf(fromDate) + 1
+            fromDates.indexOf(fromDate)
           ) : (
             toDates.indexOf(toDate) -
-            fromDates.indexOf(fromDate) + 2
+            fromDates.indexOf(fromDate) + 1
           )
         ),
         amount: ((fromDate === "23rd March Night" ?
           (
             toDates.indexOf(toDate) -
-            fromDates.indexOf(fromDate) + 1
+            fromDates.indexOf(fromDate)
           ) : (
             toDates.indexOf(toDate) -
-            fromDates.indexOf(fromDate) + 2
+            fromDates.indexOf(fromDate) + 1
           )
         ) * roomCost[roomType]) +
           50 *
@@ -269,10 +271,10 @@ const AccommodationEdit = () => {
                 fromDate === "23rd March Night" ?
                   (
                     toDates.indexOf(toDate) -
-                    fromDates.indexOf(fromDate) + 1
+                    fromDates.indexOf(fromDate)
                   ) : (
                     toDates.indexOf(toDate) -
-                    fromDates.indexOf(fromDate) + 2
+                    fromDates.indexOf(fromDate) + 1
                   )
               }
             </b>
@@ -402,16 +404,19 @@ const AccommodationEdit = () => {
               {((fromDate === "23rd March Night" ?
                 (
                   toDates.indexOf(toDate) -
-                  fromDates.indexOf(fromDate) + 1
+                  fromDates.indexOf(fromDate)
                 ) : (
                   toDates.indexOf(toDate) -
-                  fromDates.indexOf(fromDate) + 2
+                  fromDates.indexOf(fromDate) + 1
                 )
               ) * roomCost[roomType]) +
                 50 *
                 (breakfast1 +
                   breakfast2 +
                   breakfast3 +
+                  lunch1+
+                  lunch2+
+                  lunch3+
                   dinner1 +
                   dinner2 
                   )}
