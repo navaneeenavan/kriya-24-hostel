@@ -9,6 +9,8 @@ import {
 const AccPaid = () => {
   const [male, setMale] = useState(null);
   const [female, setFemale] = useState(null);
+  const [id, setId] = useState(null);
+  const [name, setName] = useState(null);
 
   useEffect(() => {
     toast.promise(
@@ -40,6 +42,37 @@ const AccPaid = () => {
 
   return (
     <Layout title={"Accommodation Paid Users"} className={"space-y-6"}>
+     <div className="flex flex-col lg:flex-row space-y-2 lg:space-y-0 w-full justify-around items-center pb-12">
+        <div className="">Sort by</div>
+        <button
+          className={`px-6 py-2 rounded-full ${
+            id ? "bg-[#3c3c3c] text-white" : "bg-[#eaeaea] text-[#303030]"
+          } border-2 border-[#303030]`}
+          onClick={() => {
+            setId(true);
+            setName(false);
+            let temp = male;
+            temp.sort((a, b) => a.kriyaId.localeCompare(b.kriyaId));
+            setMale(temp);
+          }}
+        >
+          Kriya ID
+        </button>
+        <button
+          className={`px-6 py-2 rounded-full ${
+            name ? "bg-[#3c3c3c] text-white" : "bg-[#eaeaea] text-[#303030]"
+          } border-2 border-[#303030]`}
+          onClick={() => {
+            setId(false);
+            setName(true);
+            let temp = [...male];
+            temp.sort((a, b) => a.name.localeCompare(b.name));
+            setMale(temp);
+          }}
+        >
+          Name
+        </button>
+      </div>
       <div className={""}>
         <p className="text-2xl font-bold pb-4">Boys</p>
         <div className="flex flex-row text-center">
@@ -67,15 +100,17 @@ const AccPaid = () => {
                 {item.breakfast1 +
                   item.breakfast2 +
                   item.breakfast3 +
+                  item.lunch1+
+                  item.lunch2+
+                  item.lunch3+
                   item.dinner1 +
-                  item.dinner2 +
-                  item.dinner3}
+                  item.dinner2}
               </p>
               <p className="w-[20%] lg:w-[10%] font-semibold">
                 Rs. {item.amount}
               </p>
               <p className="w-[20%] lg:w-[10%] font-semibold">{item.room}</p>
-              <input type="checkbox" className="hidden lg:block w-[5%]" checked={item.vacated} onClick={() => {
+              <input type="checkbox" className="hidden lg:block w-[5%]" checked={item.vacated } onClick={() => {
                 const updatedList = male.map((up) => {
                   if (up.email === item.email) {
                     return { ...up, vacated: true }

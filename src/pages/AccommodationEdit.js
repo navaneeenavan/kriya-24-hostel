@@ -19,31 +19,30 @@ const AccommodationEdit = () => {
   const [roomType, setRoomType] = useState("");
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
-  const [amenities, setAmenities] = useState("");
   const [breakfast1, setBreakfast1] = useState(false);
   const [breakfast2, setBreakfast2] = useState(false);
   const [breakfast3, setBreakfast3] = useState(false);
+  const [lunch1, setLunch1] = useState(false);
+  const [lunch2, setLunch2] = useState(false);
+  const [lunch3, setLunch3] = useState(false);
   const [dinner1, setDinner1] = useState(false);
   const [dinner2, setDinner2] = useState(false);
-  const [dinner3, setDinner3] = useState(false);
   const [room, setRoom] = useState("");
 
   const fromDates = [
-    "23rd March Night",
-    "24th March Morning",
-    "25th March Morning",
-    "26th March Morning",
+    "22nd February Night",
+    "24th February Morning",
+    "25th February Morning",
+    "26th February Morning",
   ];
   const toDates = [
-    "24th March Night",
-    "25th March Night",
-    "26th March Evening",
+    "24th February Night",
+    "25th February Night",
+    "26th February Evening",
   ]
   const roomCost = {
     "Common Free Hall": 0,
-    "Two Sharing": 150,
-    "4 / 6 Sharing with common bathroom": 150,
-    "2 Sharing with attached bathroom": 600,
+    "Two sharing with common bathroom": 250,
   };
 
   const handleChange = (val) => {
@@ -57,13 +56,14 @@ const AccommodationEdit = () => {
             setRoomType(res.data.accommodations.roomType);
             setFromDate(res.data.accommodations.from);
             setToDate(res.data.accommodations.to);
-            setAmenities(res.data.accommodations.amenities);
             setBreakfast1(res.data.accommodations.breakfast1);
             setBreakfast2(res.data.accommodations.breakfast2);
             setBreakfast3(res.data.accommodations.breakfast3);
+            setLunch1(res.data.lunch1);
+            setLunch2(res.data.lunch2);
+            setLunch3(res.data.lunch3);
             setDinner1(res.data.accommodations.dinner1);
             setDinner2(res.data.accommodations.dinner2);
-            setDinner3(res.data.accommodations.dinner3);
             setRoom(res.data.accommodations.room);
             return "Details Fetched";
           },
@@ -91,13 +91,14 @@ const AccommodationEdit = () => {
           setRoomType(res.data.accommodations.roomType);
           setFromDate(res.data.accommodations.from);
           setToDate(res.data.accommodations.to);
-          setAmenities(res.data.accommodations.amenities);
           setBreakfast1(res.data.accommodations.breakfast1);
           setBreakfast2(res.data.accommodations.breakfast2);
           setBreakfast3(res.data.accommodations.breakfast3);
+          setLunch1(res.data.lunch1);
+          setLunch2(res.data.lunch2);
+          setLunch3(res.data.lunch3);
           setDinner1(res.data.accommodations.dinner1);
           setDinner2(res.data.accommodations.dinner2);
-          setDinner3(res.data.accommodations.dinner3);
           setRoom(res.data.accommodations.room);
           return "Details Fetched";
         }
@@ -127,13 +128,14 @@ const AccommodationEdit = () => {
         roomType,
         from: fromDate,
         to: toDate,
-        amenities,
         breakfast1,
         breakfast2,
         breakfast3,
+        lunch1,
+        lunch2,
+        lunch3,
         dinner1,
         dinner2,
-        dinner3,
         room,
         days: (fromDate === "23rd March Night" ?
           (
@@ -157,20 +159,12 @@ const AccommodationEdit = () => {
           (breakfast1 +
             breakfast2 +
             breakfast3 +
+            lunch1+
+            lunch2+
+            lunch3+
             dinner1 +
-            dinner2 +
-            dinner3) +
-          (amenities === "Yes" &&
-            100 *
-            (fromDate === "23rd March Night" ?
-              (
-                toDates.indexOf(toDate) -
-                fromDates.indexOf(fromDate) + 1
-              ) : (
-                toDates.indexOf(toDate) -
-                fromDates.indexOf(fromDate) + 2
-              )
-            ))
+            dinner2 
+            )
       }), {
         loading: "Updating Details",
         success: (res) => {
@@ -230,8 +224,8 @@ const AccommodationEdit = () => {
                 <Toggle
                   title="Room Type"
                   valueState={[roomType, setRoomType]}
-                  options={["Common Free Hall", "Two Sharing"]}
-                  amount={["Free", "₹ 150"]}
+                  options={["Common Free Hall","Two Sharing"]}
+                  amount={["Free","150"]}
                   className="w-full"
                 />
 
@@ -247,11 +241,9 @@ const AccommodationEdit = () => {
                   title="Room Type"
                   valueState={[roomType, setRoomType]}
                   options={[
-                    "Common Free Hall",
-                    "4 / 6 Sharing with common bathroom",
-                    "2 Sharing with attached bathroom",
+                    "Two sharing with common bathroom"
                   ]}
-                  amount={["Free", "₹ 150", "₹ 600"]}
+                  amount={["250"]}
                   className="w-full"
                 />
               </div>
@@ -295,11 +287,33 @@ const AccommodationEdit = () => {
             <div className="flex flex-row mt-4 w-full font-semibold">
               <p className="w-1/3">Date</p>
               <p className="w-1/3 flex justify-center">Breakfast</p>
+              <p className="w-1/3 flex justify-center">Lunch</p>
               <p className="w-1/3 flex justify-center">Dinner</p>
             </div>
+            
             <div className="flex flex-row mt-4 w-full items-center">
-              <p className="w-1/3">23rd March</p>
+              <p className="w-1/3">23th February</p>
               <div className="w-1/3 flex justify-center">
+                <button
+                  className={`${breakfast1 && "bg-[#C80067]"
+                    } border-2 border-[#C80067] text-white rounded-lg font-poppins flex items-center`}
+                  onClick={() => {
+                    setBreakfast1(!breakfast1);
+                  }}
+                >
+                  <FiCheck className="w-8 h-8" />
+                </button>
+              </div>
+              <div className="w-1/3 flex justify-center">
+                <button
+                  className={`${lunch1 && "bg-[#C80067]"
+                    } border-2 border-[#C80067] text-white rounded-lg font-poppins flex items-center`}
+                  onClick={() => {
+                    setLunch1(!lunch1);
+                  }}
+                >
+                  <FiCheck className="w-8 h-8" />
+                </button>
               </div>
               <div className="w-1/3 flex justify-center">
                 <button
@@ -312,15 +326,27 @@ const AccommodationEdit = () => {
                   <FiCheck className="w-8 h-8" />
                 </button>
               </div>
+             
             </div>
             <div className="flex flex-row mt-4 w-full items-center">
-              <p className="w-1/3">24th March</p>
+              <p className="w-1/3">24th February</p>
               <div className="w-1/3 flex justify-center">
                 <button
-                  className={`${breakfast1 && "bg-[#C80067]"
+                  className={`${breakfast2 && "bg-[#C80067]"
                     } border-2 border-[#C80067] text-white rounded-lg font-poppins flex items-center`}
                   onClick={() => {
-                    setBreakfast1(!breakfast1);
+                    setBreakfast2(!breakfast2);
+                  }}
+                >
+                  <FiCheck className="w-8 h-8" />
+                </button>
+              </div>
+              <div className="w-1/3 flex justify-center">
+                <button
+                  className={`${lunch2 && "bg-[#C80067]"
+                    } border-2 border-[#C80067] text-white rounded-lg font-poppins flex items-center`}
+                  onClick={() => {
+                    setLunch2(!lunch2);
                   }}
                 >
                   <FiCheck className="w-8 h-8" />
@@ -339,32 +365,7 @@ const AccommodationEdit = () => {
               </div>
             </div>
             <div className="flex flex-row mt-4 w-full items-center">
-              <p className="w-1/3">25th March</p>
-              <div className="w-1/3 flex justify-center">
-                <button
-                  className={`${breakfast2 && "bg-[#C80067]"
-                    } border-2 border-[#C80067] text-white rounded-lg font-poppins flex items-center`}
-                  onClick={() => {
-                    setBreakfast2(!breakfast2);
-                  }}
-                >
-                  <FiCheck className="w-8 h-8" />
-                </button>
-              </div>
-              <div className="w-1/3 flex justify-center">
-                <button
-                  className={`${dinner3 && "bg-[#C80067]"
-                    } border-2 border-[#C80067] text-white rounded-lg font-poppins flex items-center`}
-                  onClick={() => {
-                    setDinner3(!dinner3);
-                  }}
-                >
-                  <FiCheck className="w-8 h-8" />
-                </button>
-              </div>
-            </div>
-            <div className="flex flex-row mt-4 w-full items-center">
-              <p className="w-1/3">26th March</p>
+              <p className="w-1/3">25th February</p>
               <div className="w-1/3 flex justify-center">
                 <button
                   className={`${breakfast3 && "bg-[#C80067]"
@@ -377,17 +378,22 @@ const AccommodationEdit = () => {
                 </button>
               </div>
               <div className="w-1/3 flex justify-center">
+                <button
+                  className={`${lunch3 && "bg-[#C80067]"
+                    } border-2 border-[#C80067] text-white rounded-lg font-poppins flex items-center`}
+                  onClick={() => {
+                    setLunch3(!lunch3);
+                  }}
+                >
+                  <FiCheck className="w-8 h-8" />
+                </button>
+              </div>
+              <div className="w-1/3 flex justify-center">
               </div>
             </div>
           </div>
 
-          <Toggle
-            title="Amenities Required"
-            valueState={[amenities, setAmenities]}
-            options={["Yes", "No"]}
-            amount={["₹ 100", "Free"]}
-            className="w-full"
-          />
+          
 
           <div className="flex flex-row w-1/2 items-center border-t border-b pb-2 border-black pt-2">
             <p className="w-1/2 text-lg">New Total</p>
@@ -407,19 +413,8 @@ const AccommodationEdit = () => {
                   breakfast2 +
                   breakfast3 +
                   dinner1 +
-                  dinner2 +
-                  dinner3) +
-                (amenities === "Yes" &&
-                  100 *
-                  (fromDate === "23rd March Night" ?
-                    (
-                      toDates.indexOf(toDate) -
-                      fromDates.indexOf(fromDate) + 1
-                    ) : (
-                      toDates.indexOf(toDate) -
-                      fromDates.indexOf(fromDate) + 2
-                    )
-                  ))}
+                  dinner2 
+                  )}
             </p>
           </div>
 
