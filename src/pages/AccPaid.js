@@ -12,6 +12,9 @@ const AccPaid = () => {
   const [id, setId] = useState(null);
   const [name, setName] = useState(null);
   const [room, setRoom] = useState(null);
+  const [idf, setIdf] = useState(null);
+  const [namef, setNamef] = useState(null);
+  const [roomf, setRoomf] = useState(null);
 
   useEffect(() => {
     toast.promise(
@@ -155,6 +158,54 @@ const AccPaid = () => {
       
 
       <div className={"pt-16"}>
+      <div className="flex flex-col lg:flex-row space-y-2 lg:space-y-0 w-full justify-around items-center pb-12">
+        <div className="">Sort by</div>
+        <button
+          className={`px-6 py-2 rounded-full ${
+            idf ? "bg-[#3c3c3c] text-white" : "bg-[#eaeaea] text-[#303030]"
+          } border-2 border-[#303030]`}
+          onClick={() => {
+            setIdf(true);
+            setRoomf(false);
+            setNamef(false);
+            let temp = female;
+            temp.sort((a, b) => a.kriyaId.localeCompare(b.kriyaId));
+            setFemale(temp);
+          }}
+        >
+          Kriya ID
+        </button>
+        <button
+          className={`px-6 py-2 rounded-full ${
+            namef ? "bg-[#3c3c3c] text-white" : "bg-[#eaeaea] text-[#303030]"
+          } border-2 border-[#303030]`}
+          onClick={() => {
+            setIdf(false);
+            setRoomf(false);
+            setNamef(true);
+            let temp = [...female];
+            temp.sort((a, b) => a.name.localeCompare(b.name));
+            setFemale(temp);
+          }}
+        >
+          Name
+        </button>
+        <button
+          className={`px-6 py-2 rounded-full ${
+            roomf ? "bg-[#3c3c3c] text-white" : "bg-[#eaeaea] text-[#303030]"
+          } border-2 border-[#303030]`}
+          onClick={() => {
+            setRoomf(true);
+            setIdf(false);
+            setNamef(false);
+            let temp = female;
+            temp.sort((a, b) => a.room.localeCompare(b.room));
+            setFemale(temp);
+          }}
+        >
+          Room
+        </button>
+      </div>
       
         <p className="text-2xl font-bold pb-4">Girls</p>
         <div className="flex flex-row text-center">
