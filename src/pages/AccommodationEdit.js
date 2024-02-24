@@ -141,20 +141,20 @@ const AccommodationEdit = () => {
         room,
         days: (fromDate === "23rd March Night" ?
           (
-            toDates.indexOf(toDate) -
-            fromDates.indexOf(fromDate)
+            toDates.indexOf(toDate)+1 -
+            fromDates.indexOf(fromDate) + 2
           ) : (
-            toDates.indexOf(toDate) -
-            fromDates.indexOf(fromDate) + 1
+            toDates.indexOf(toDate)+1 -
+            fromDates.indexOf(fromDate) + 2
           )
         ),
         amount: ((fromDate === "23rd March Night" ?
           (
-            toDates.indexOf(toDate) -
-            fromDates.indexOf(fromDate)
+            toDates.indexOf(toDate)+1 -
+            fromDates.indexOf(fromDate) + 2
           ) : (
-            toDates.indexOf(toDate) -
-            fromDates.indexOf(fromDate) + 1
+            toDates.indexOf(toDate)+1 -
+            fromDates.indexOf(fromDate) + 2 + 1
           )
         ) * roomCost[roomType]) +
           50 *
